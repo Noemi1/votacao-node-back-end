@@ -12,12 +12,13 @@ const app = express();
 const server = http.createServer(app);
 
 // Configurar CORS antes do WebSocket
-app.use(cors({
+app.use(cors());
+/*{
   origin: ["http://localhost:8080", "*"],
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   credentials: true,
   allowedHeaders: ["Content-Type", "Authorization"]
-}));
+})*/
 
 app.use(express.json());
 
