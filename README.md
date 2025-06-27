@@ -65,10 +65,13 @@ A documentação interativa da API está disponível em:
 #### 🔌 Eventos WebSocket 
 
 - `connection`: Disparado quando um cliente se conecta ao WebSocket
-- `listaTemas`: Enviado automaticamente para novos clientes conectados
 - `disconnect`: Disparado quando um cliente se desconecta
+- `listaTemas`: Enviado automaticamente para novos clientes conectados
+- `newTema`: Novo tema criado 
+- `updateTema`: Tema atualizado
+- `temaInativado`: Tema inativado
+- `temaAtivado`: Tema ativado
 - `votoRegistrado`: Disparado quando um novo voto é registrado (inclui o total de votos atualizado)
-
 
 #### 🗄️ Estrutura do Banco de Dados
 
