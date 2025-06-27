@@ -51,35 +51,6 @@ function setupWebsocket(server, db) {
     socket.on("disconnect", (reason) => {
       console.log(`❌ Cliente desconectado: ${socket.id}. Motivo: ${reason}`);
     });
-
-    // Eventos
-    socket.on("votoRegistrado", (data) => {
-      console.log("🗳️ Voto registrado pelo cliente:", data);
-      // Broadcast para todos os outros clientes
-      socket.broadcast.emit("votoRegistrado", data);
-    });
-
-    socket.on("temaCriado", (data) => {
-      console.log("🆕 Tema criado pelo cliente:", data);
-      const temaConvertido = convertBooleanFields(data);
-      socket.broadcast.emit("temaCriado", temaConvertido);
-    });
-
-    socket.on("temaAtualizado", (data) => {
-      console.log("✏️ Tema atualizado pelo cliente:", data);
-      const temaConvertido = convertBooleanFields(data);
-      socket.broadcast.emit("temaAtualizado", temaConvertido);
-    });
-
-    socket.on("temaInativado", (data) => {
-      console.log("🚫 Tema inativado pelo cliente:", data);
-      socket.broadcast.emit("temaInativado", data);
-    });
-
-    socket.on("temaAtivado", (data) => {
-      console.log("✅ Tema ativado pelo cliente:", data);
-      socket.broadcast.emit("temaAtivado", data);
-    });
   });
 
   console.log('✅ WebSocket configurado com sucesso');

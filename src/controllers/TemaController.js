@@ -106,10 +106,12 @@ const inativar = async (req, res) => {
     ipInativacao: ip,
   });
 
-  const temaInativado = convertBooleanFields({ ...tema, ativo: false });
+  // Buscar o tema atualizado
+  const temaAtualizado = await connection("temas").where({ id }).first();
+  const temaConvertido = convertBooleanFields(temaAtualizado);
 
-  sendMessage("temaInativado", { id });
-  return res.status(200).json({ id, inativado: true, ativo: false });
+  sendMessage("temaInativado", temaConvertido);
+  return res.status(200).json(temaConvertido);
 };
 
 // Ativar tema (limpando campos de inativação)
@@ -125,10 +127,12 @@ const ativar = async (req, res) => {
     ipInativacao: null,
   });
 
-  const temaAtivado = convertBooleanFields({ ...tema, ativo: true });
+  // Buscar o tema atualizado
+  const temaAtualizado = await connection("temas").where({ id }).first();
+  const temaConvertido = convertBooleanFields(temaAtualizado);
 
-  sendMessage("temaAtivado", { id });
-  return res.status(200).json({ id, ativado: true, ativo: true });
+  sendMessage("temaAtivado", temaConvertido);
+  return res.status(200).json(temaConvertido);
 };
 
 module.exports = {

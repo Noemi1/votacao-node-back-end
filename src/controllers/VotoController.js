@@ -35,8 +35,7 @@ const votar = async (req, res) => {
         .count("id as total")
         .groupBy("idTema");
 
-    // Emitir eventos WebSocket
-    sendMessage("vote-update", totais);
+    // Emitir evento WebSocket
     sendMessage("votoRegistrado", { 
         id, 
         idTema, 
