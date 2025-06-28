@@ -52,4 +52,4 @@ jobs:
           app-name: 'votacao-back-end'
           slot-name: 'Production'
           package: .
-          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_46ED7F70256D4395B32DA23EFF53F2B9 }}
+          publish-profile: ${{ secrets.AZUREAPPSERVICE_PUBLISHPROFILE_36B32628A9E04311B77C2CB7D7EA1B41 }}
