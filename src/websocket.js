@@ -30,7 +30,7 @@ function setupWebsocket(server, db) {
       ].filter(Boolean), // Remove valores undefined/null
       methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
       credentials: true,
-      allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"]
+      allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"]
     },
     transports: ['websocket', 'polling'],
     allowEIO3: true,
@@ -39,7 +39,7 @@ function setupWebsocket(server, db) {
   });
 
   io.on("connection", async (socket) => {
-    console.log(`🔌 Cliente conectado: ${socket.id}`);
+    console.log(`🔌 Cliente conectado: ${socket.id} - Origin: ${socket.handshake.headers.origin || 'No origin'}`);
 
     try {
       const temas = await db("temas").where({ ativo: true }).orderBy("dataCriacao", "desc");

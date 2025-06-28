@@ -20,7 +20,7 @@ app.use(cors({
   ].filter(Boolean), // Remove valores undefined/null
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   credentials: true,
-  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With", "Accept"],
   optionsSuccessStatus: 200 // Para compatibilidade com alguns navegadores
 }));
 
@@ -32,10 +32,21 @@ setupWebsocket(server, connection);
 // Swagger documentation
 app.use('/api-docs', swaggerUi.serve, swaggerUi.setup(swaggerSpecs));
 
+// Rota de health check
+app.get('/health', (req, res) => {
+  res.json({ 
+    status: 'OK', 
+    timestamp: new Date().toISOString(),
+    environment: process.env.NODE_ENV || 'development'
+  });
+});
+
 app.use(routes);
 
 const PORT = process.env.PORT || 3000;
 server.listen(PORT, () => {
-  console.log(`Servidor rodando na porta ${PORT}`);
-  console.log(`Documentação da API disponível em: http://localhost:${PORT}/api-docs`);
+  console.log(`🚀 Servidor rodando na porta ${PORT}`);
+  console.log(`📚 Documentação da API disponível em: http://localhost:${PORT}/api-docs`);
+  console.log(`🏥 Health check disponível em: http://localhost:${PORT}/health`);
+  console.log(`🌍 Ambiente: ${process.env.NODE_ENV || 'development'}`);
 });
