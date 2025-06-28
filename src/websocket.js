@@ -22,10 +22,15 @@ function setupWebsocket(server, db) {
   
   io = new Server(server, {
     cors: { 
-      origin: [ "*"],
+      origin: [
+        "http://localhost:8080", // Desenvolvimento local
+        "https://votacao-vue-front-end.azurestaticapps.net", // Azure Static Web Apps
+        "https://*.azurestaticapps.net", // Qualquer subdomínio do Azure
+        process.env.FRONTEND_URL // URL do frontend via variável de ambiente
+      ].filter(Boolean), // Remove valores undefined/null
       methods: ["GET", "POST", "PUT", "DELETE", "OPTIONS"],
       credentials: true,
-      allowedHeaders: ["Content-Type", "Authorization"]
+      allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"]
     },
     transports: ['websocket', 'polling'],
     allowEIO3: true,

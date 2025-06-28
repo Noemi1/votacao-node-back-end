@@ -12,13 +12,17 @@ const app = express();
 const server = http.createServer(app);
 
 // Configurar CORS antes do WebSocket
-app.use(cors());
-/*{
-  origin: ["http://localhost:8080", "*"],
+app.use(cors({
+  origin: [
+    "http://localhost:8080", // Desenvolvimento local
+    "https://purple-coast-0153c791e.2.azurestaticapps.net", // Azure Static Web Apps
+    process.env.FRONTEND_URL // URL do frontend via variável de ambiente
+  ].filter(Boolean), // Remove valores undefined/null
   methods: ["GET", "POST", "PUT", "PATCH", "DELETE", "OPTIONS"],
   credentials: true,
-  allowedHeaders: ["Content-Type", "Authorization"]
-})*/
+  allowedHeaders: ["Content-Type", "Authorization", "X-Requested-With"],
+  optionsSuccessStatus: 200 // Para compatibilidade com alguns navegadores
+}));
 
 app.use(express.json());
 
