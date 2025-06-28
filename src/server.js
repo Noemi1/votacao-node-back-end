@@ -11,6 +11,12 @@ const connection = require("./database/connection");
 const app = express();
 const server = http.createServer(app);
 
+// Middleware para log de requisições
+app.use((req, res, next) => {
+  console.log(`${new Date().toISOString()} - ${req.method} ${req.path} - Origin: ${req.headers.origin || 'No origin'}`);
+  next();
+});
+
 // Configurar CORS antes do WebSocket
 app.use(cors({
   origin: [
@@ -37,7 +43,15 @@ app.get('/health', (req, res) => {
   res.json({ 
     status: 'OK', 
     timestamp: new Date().toISOString(),
-    environment: process.env.NODE_ENV || 'development'
+    environment: process.env.NODE_ENV || 'development',
+    cors: {
+      frontendUrl: process.env.FRONTEND_URL,
+      allowedOrigins: [
+        "http://localhost:8080",
+        "https://purple-coast-0153c791e.2.azurestaticapps.net",
+        process.env.FRONTEND_URL
+      ].filter(Boolean)
+    }
   });
 });
 
@@ -49,4 +63,5 @@ server.listen(PORT, () => {
   console.log(`📚 Documentação da API disponível em: http://localhost:${PORT}/api-docs`);
   console.log(`🏥 Health check disponível em: http://localhost:${PORT}/health`);
   console.log(`🌍 Ambiente: ${process.env.NODE_ENV || 'development'}`);
+  console.log(`🔗 FRONTEND_URL: ${process.env.FRONTEND_URL || 'Não configurado'}`);
 });
